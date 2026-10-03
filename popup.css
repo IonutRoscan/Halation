@@ -1,0 +1,220 @@
+:root {
+  --base: #0f1013;
+  --raised: #17181c;
+  --line: #2a2c33;
+  --text: #e8e6e1;
+  --muted: #878b94;
+  --halo: #ff5a3c;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 300px;
+  background: var(--base);
+  color: var(--text);
+  font:
+    13px/1.4 system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* Live preview: the one memorable element. It mirrors the sliders. */
+.preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 84px;
+  margin: 0 16px;
+  overflow: hidden;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  transition: opacity 0.2s;
+}
+
+.bloom,
+.screen {
+  grid-area: 1 / 1;
+  width: 120px;
+  height: 56px;
+  border-radius: 3px;
+  background: linear-gradient(115deg, #ffc46b, #ff5a3c 45%, #3b6bff);
+}
+
+.bloom {
+  opacity: var(--op, 0.8);
+  filter: blur(var(--blur, 14px)) saturate(var(--sat, 1.4));
+  transform: scale(var(--size, 1.12));
+}
+
+.off .preview {
+  opacity: 0.35;
+}
+
+main {
+  padding: 14px 16px 4px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  margin-bottom: 9px;
+}
+
+.row label {
+  color: var(--text);
+}
+.row output {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.row.toggle {
+  align-items: center;
+  margin-top: 12px;
+}
+
+.hint {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 18px;
+  margin: 2px 0 0;
+  background: transparent;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--halo) var(--pct, 50%),
+    var(--line) var(--pct, 50%)
+  );
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5.5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+input[type='range']::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line);
+}
+input[type='range']::-moz-range-progress {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--halo);
+}
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+input[type='range']:focus-visible,
+.switch input:focus-visible + span,
+button:focus-visible {
+  outline: 2px solid var(--halo);
+  outline-offset: 3px;
+}
+
+/* On/off switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+.switch input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.switch span {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: var(--line);
+  transition: background 0.15s;
+  pointer-events: none;
+}
+.switch span::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform 0.15s;
+}
+.switch input:checked + span {
+  background: var(--halo);
+}
+.switch input:checked + span::after {
+  transform: translateX(14px);
+}
+
+footer {
+  padding: 4px 16px 14px;
+}
+
+button {
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+button:hover {
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

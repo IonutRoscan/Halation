@@ -1,0 +1,134 @@
+/* Halation: styles only apply when content.js adds a class to <html>:
+   halation-on (running), halation-fill (fill the page), halation-soft (soft top bar). */
+
+/* YouTube's own cinematic glow would stack with ours, so hide it while Halation runs. */
+html.halation-on #cinematics,
+html.halation-on ytd-cinematics,
+html.halation-on ytd-cinematic-container-renderer,
+html.halation-on #cinematics-container,
+html.halation-on .ytp-ambient-lighting {
+  display: none !important;
+}
+
+/* ---------- Fill the page ---------- */
+
+/* The glow canvas sits behind the page, so the base color moves to <html>
+   (using YouTube's own variable, so light theme stays readable). */
+html.halation-fill {
+  background: var(--yt-spec-base-background, #0f0f0f) !important;
+}
+
+/* Everything in front of the canvas has to let it through. */
+html.halation-fill body,
+html.halation-fill ytd-app,
+html.halation-fill ytd-app > #content,
+html.halation-fill ytd-page-manager,
+html.halation-fill ytd-watch-flexy,
+html.halation-fill #columns,
+html.halation-fill #primary,
+html.halation-fill #primary-inner,
+html.halation-fill #secondary,
+html.halation-fill #secondary-inner,
+html.halation-fill #below,
+html.halation-fill #player-container-outer,
+html.halation-fill #player-container-inner,
+html.halation-fill #player-container,
+html.halation-fill #full-bleed-container,
+html.halation-fill ytd-watch-metadata,
+html.halation-fill #above-the-fold,
+html.halation-fill #watch-while-engagement-panel,
+html.halation-fill #clarify-box,
+html.halation-fill #ticket-shelf,
+html.halation-fill #chat-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+html.halation-fill #halation-glow {
+  position: fixed !important;
+  pointer-events: none !important;
+}
+
+/* Floating player: rounded corners and a shadow (not in fullscreen). */
+html.halation-fill ytd-watch-flexy[rounded-player-large] #ytd-player,
+html.halation-fill #movie_player:not(.ytp-fullscreen) {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Translucent chips, buttons and description, so text stays readable over the glow. */
+html.halation-fill yt-related-chip-cloud-renderer,
+html.halation-fill #chips-wrapper,
+html.halation-fill iron-selector#chips {
+  background: transparent !important;
+}
+
+html.halation-fill yt-chip-cloud-chip-renderer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+html.halation-fill ytd-menu-renderer ytd-button-renderer yt-button-shape,
+html.halation-fill ytd-watch-metadata #actions ytd-button-renderer button,
+html.halation-fill #top-level-buttons-computed ytd-button-renderer,
+html.halation-fill ytd-segmented-like-dislike-button-renderer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html.halation-fill ytd-watch-metadata #description {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+}
+
+/* ---------- Soft top bar ----------
+   Controlled only by the "Soften the top bar" toggle, in every mode. */
+
+html.halation-soft ytd-masthead,
+html.halation-soft ytd-masthead #background,
+html.halation-soft #masthead-container {
+  background: rgba(15, 15, 15, 0.35) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(140%) !important;
+  backdrop-filter: blur(24px) saturate(140%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+}
+
+html.halation-soft yt-searchbox .ytSearchboxComponentInputBox,
+html.halation-soft ytd-searchbox #search-input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html.halation-soft yt-searchbox .ytSearchboxComponentSearchButton,
+html.halation-soft ytd-searchbox #search-icon-legacy {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ---------- Drop shadows ----------
+   --halation-shadow is 0 to 1 (set from the slider in content.js).
+   Box-shadows rather than filter: drop-shadow, which is much cheaper on the GPU. */
+
+/* The player (not in fullscreen). */
+html.halation-shadow ytd-watch-flexy:not([fullscreen]) ytd-player {
+  box-shadow: 0 calc(var(--halation-shadow) * 24px) calc(var(--halation-shadow) * 60px)
+    rgba(0, 0, 0, var(--halation-shadow));
+}
+html.halation-shadow ytd-watch-flexy[rounded-player-large]:not([fullscreen]) ytd-player {
+  border-radius: 12px;
+}
+
+/* Thumbnails in the side column (both the older and newer YouTube layouts). */
+html.halation-shadow ytd-watch-flexy #secondary yt-thumbnail-view-model,
+html.halation-shadow ytd-watch-flexy #secondary ytd-thumbnail {
+  box-shadow: 0 calc(var(--halation-shadow) * 10px) calc(var(--halation-shadow) * 28px)
+    rgba(0, 0, 0, calc(var(--halation-shadow) * 0.9));
+  border-radius: 12px;
+}

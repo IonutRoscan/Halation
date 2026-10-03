@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Halation</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Halation</h1>
+      <label class="switch">
+        <input
+          type="checkbox"
+          id="enabled"
+          role="switch"
+          aria-label="Turn Halation on or off"
+        />
+        <span></span>
+      </label>
+    </header>
+
+    <div class="preview" aria-hidden="true">
+      <div class="bloom"></div>
+      <div class="screen"></div>
+    </div>
+
+    <main>
+      <div class="row">
+        <label for="intensity">Intensity</label>
+        <output id="intensityOut"></output>
+        <input type="range" id="intensity" min="0" max="100" step="1" />
+      </div>
+      <div class="row">
+        <label for="blur">Blur</label>
+        <output id="blurOut"></output>
+        <input type="range" id="blur" min="0" max="120" step="2" />
+      </div>
+      <div class="row">
+        <label for="saturation">Saturation</label>
+        <output id="saturationOut"></output>
+        <input type="range" id="saturation" min="50" max="300" step="5" />
+      </div>
+      <div class="row">
+        <label for="size">Glow size</label>
+        <output id="sizeOut"></output>
+        <input type="range" id="size" min="100" max="150" step="1" />
+      </div>
+      <div class="row">
+        <label for="shadow">Shadow</label>
+        <output id="shadowOut"></output>
+        <input type="range" id="shadow" min="0" max="100" step="1" />
+      </div>
+      <div class="row">
+        <label for="fps">Frame rate</label>
+        <output id="fpsOut"></output>
+        <input type="range" id="fps" min="5" max="60" step="1" />
+        <p class="hint">Lower frame rates and less blur use less GPU.</p>
+      </div>
+      <div class="row toggle">
+        <span id="fillName">Fill the page</span>
+        <label class="switch">
+          <input
+            type="checkbox"
+            id="fill"
+            role="switch"
+            aria-labelledby="fillName"
+          />
+          <span></span>
+        </label>
+        <p class="hint">
+          Spreads the glow across the whole page background. Uses more GPU.
+        </p>
+      </div>
+      <div class="row toggle">
+        <span id="softBarName">Soften the top bar</span>
+        <label class="switch">
+          <input
+            type="checkbox"
+            id="softBar"
+            role="switch"
+            aria-labelledby="softBarName"
+          />
+          <span></span>
+        </label>
+        <p class="hint">Frosted, translucent bar and a quieter search box.</p>
+      </div>
+    </main>
+
+    <footer>
+      <button type="button" id="reset">Reset to defaults</button>
+    </footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
